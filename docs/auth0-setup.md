@@ -49,7 +49,7 @@ When initializing `Auth0Provider` in the React app, pass the audience:
   domain={import.meta.env.VITE_AUTH0_DOMAIN}
   clientId={import.meta.env.VITE_AUTH0_CLIENT_ID}
   authorizationParams={{
-    redirect_uri: window.location.origin + '/callback',
+    redirect_uri: window.location.origin,
     audience: import.meta.env.VITE_AUTH0_AUDIENCE,
   }}
 >
@@ -66,7 +66,7 @@ Auth0 will only redirect to URLs explicitly listed in **Allowed Callback URLs**.
 In the SPA application settings → **Allowed Callback URLs**, add:
 
 ```
-http://localhost:5173/callback
+http://localhost:5173
 ```
 
 Add production URLs separated by commas when deploying.
