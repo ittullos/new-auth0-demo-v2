@@ -15,10 +15,12 @@ that validates RS256 JWTs via Auth0's JWKS endpoint.
 
 ## Project Structure
 
-auth0-demo-v2/
-├── frontend/ # React + Vite SPA
-├── backend/ # Sinatra API
-└── docs/ # Architecture and Auth0 setup guides
+```bash
+ auth0-demo-v2/
+ ├── frontend/   # React + Vite SPA
+ ├── backend/    # Sinatra API
+ └── docs/       # Architecture and Auth0 setup guides
+```
 
 ## Getting Started
 
@@ -35,22 +37,26 @@ cp .env.example .env
 # fill in AUTH0_DOMAIN, AUTH0_AUDIENCE, FRONTEND_ORIGIN
 bundle install
 bundle exec rackup -p 9292
+```
 
-Frontend
+### Frontend
 
+```bash
 cd frontend
 cp .env.example .env.local
 # fill in VITE_AUTH0_DOMAIN, VITE_AUTH0_CLIENT_ID, VITE_AUTH0_AUDIENCE
 npm install
 npm run dev
+```
 
 Tests
 
+```bash
 cd backend
 bundle exec rspec
-
-Architecture
-
-See docs/architecture.md for details on the auth token flow, JWT validation,
-CORS strategy, and error response structure.
 ```
+
+### Architecture
+
+See [docs/architecture.md](docs/architecture.md) for details on the auth token flow, JWT validation,
+CORS strategy, and error response structure.
