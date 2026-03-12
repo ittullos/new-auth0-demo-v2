@@ -1,0 +1,3 @@
+# Frontend-only local artifacts
+dist-ssr
+*.local
