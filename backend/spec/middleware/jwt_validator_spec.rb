@@ -89,6 +89,28 @@ RSpec.describe JwtValidator do
     end
   end
 
+  describe 'algorithm confusion' do
+    it 'rejects a token with alg: none' do
+      payload = {
+        sub: 'attacker', iss: "https://#{JwtTestHelper::TEST_DOMAIN}/",
+        aud: JwtTestHelper::TEST_AUDIENCE, exp: Time.now.to_i + 3600
+      }
+      token = JWT.encode(payload, nil, 'none')
+      status, = make_request(token: token)
+      expect(status).to eq(401)
+    end
+
+    it 'rejects a token claiming HS256' do
+      payload = {
+        sub: 'attacker', iss: "https://#{JwtTestHelper::TEST_DOMAIN}/",
+        aud: JwtTestHelper::TEST_AUDIENCE, exp: Time.now.to_i + 3600
+      }
+      token = JWT.encode(payload, 'secret', 'HS256')
+      status, = make_request(token: token)
+      expect(status).to eq(401)
+    end
+  end
+
   describe 'valid token' do
     it 'returns 200' do
       status, = make_request(token: valid_token)

@@ -28,13 +28,14 @@ class JwtValidator
     header = env['HTTP_AUTHORIZATION'] || ''
     raise ValidationError, 'Missing or invalid Authorization header' unless header.start_with?('Bearer ')
 
-    header.sub('Bearer ', '')
+    header.delete_prefix('Bearer ')
   end
 
   def validate(token)
     header = JWT.decode(token, nil, false).last
     kid = header['kid']
     raise ValidationError, 'Missing kid in token header' unless kid
+    raise ValidationError, 'Unsupported algorithm' unless header['alg'] == 'RS256'
 
     public_key = @jwks.public_key(kid)
 
