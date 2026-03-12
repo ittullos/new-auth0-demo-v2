@@ -11,10 +11,11 @@ class ApplicationController < Sinatra::Base
 
   get '/profile' do
     payload = request.env['jwt.payload']
+    ns = 'https://auth0-demo-v2.dev'
     json({
       sub:   payload['sub'],
-      email: payload['email'],
-      name:  payload['name']
+      email: payload["#{ns}/email"],
+      name:  payload["#{ns}/name"]
     })
   end
 

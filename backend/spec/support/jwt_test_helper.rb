@@ -26,15 +26,17 @@ module JwtTestHelper
       .to_return(status: 200, body: jwks_body, headers: { 'Content-Type' => 'application/json' })
   end
 
+  CLAIM_NS = 'https://auth0-demo-v2.dev'
+
   def valid_token(overrides = {})
     payload = {
-      sub:   'auth0|test-user',
-      iss:   "https://#{TEST_DOMAIN}/",
-      aud:   TEST_AUDIENCE,
-      iat:   Time.now.to_i,
-      exp:   Time.now.to_i + 3600,
-      name:  'Test User',
-      email: 'test@example.com'
+      sub:                    'auth0|test-user',
+      iss:                    "https://#{TEST_DOMAIN}/",
+      aud:                    TEST_AUDIENCE,
+      iat:                    Time.now.to_i,
+      exp:                    Time.now.to_i + 3600,
+      "#{CLAIM_NS}/name"  =>  'Test User',
+      "#{CLAIM_NS}/email" =>  'test@example.com'
     }.merge(overrides)
 
     JWT.encode(payload, rsa_private_key, 'RS256', { kid: TEST_KID })
