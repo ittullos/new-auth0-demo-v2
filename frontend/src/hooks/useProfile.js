@@ -30,7 +30,10 @@ export function useProfile() {
           if (status === 401) {
             setError({ type: 'unauthorized', message: 'Your session is invalid or expired. Please log in again.' })
           } else {
-            setError({ type: 'unknown', message: err.message || 'Something went wrong.' })
+            const detail = [err.message, err.config?.url && `URL: ${err.config.url}`, err.code && `(${err.code})`]
+              .filter(Boolean)
+              .join(' · ')
+            setError({ type: 'unknown', message: detail || 'Something went wrong.' })
           }
         }
       } finally {
